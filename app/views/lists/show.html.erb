@@ -1,0 +1,35 @@
+<div>
+  <p><strong>Movies</strong></p>
+
+  <div>
+    <%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-flat" %>
+  </div>
+
+  <div>
+    <ul>
+      <% @bookmarks.each do |bookmark| %>
+        <li>
+          <%= bookmark.movie.title %> - <%= bookmark.comment %>
+          <%= link_to "Delete from the list", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this movie" } %>
+        </li>
+      <% end %>
+    </ul>
+
+  <div>
+    <h3>Reviews</h3>
+    <% if @list.reviews.empty? %>
+      <small><em>Be the first one to review this list</em></small>
+    <% end %>
+    <% @list.reviews.each do |review| %>
+      <div>
+        <% review.rating.times do %>
+          <i></i>
+        <% end %>
+        <small><em><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
+        <p><%= review.comment %></p>
+      </div>
+      <hr>
+    <% end %>
+  </div>
+  <br>
+</div>
